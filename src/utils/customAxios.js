@@ -6,34 +6,57 @@ const axios = ax.default.create();
 axios.interceptors.response.use(
   (response) => {
     // RESTRUCTURE RESPONSE DEKAT SINI
+
+    if (
+      response.status === 200 &&
+      response.data["Error Message"] !== undefined
+    ) {
+      return {
+        status: 500,
+        data: response.data["Error Message"],
+      };
+    }
+
+    return {
+      status: response.status,
+      data: response.data,
+    };
   },
   (error) => {
     // RESTRUCTURE ERROR DEKAT SINI
   }
 );
 
-export const call = async (config) => {
+export const axiosCall = async (config) => {
   // METHOD
-
+  let method = config.method;
   // URL
-
-  // DATA
-
-  // PARAMS
+  // let url = config.url;
+  let url = `${process.env.REACT_APP_API_URL}${config.url}?apikey=${process.env.REACT_APP_API_KEY}`;
 
   // HEADERS
+  let headers;
 
-  // AUTH
+  // DATA
+  let data = config.data;
+
+  // PARAMS
+  let params = config.params;
 
   // FINAL
   return axios({
-    method: "",
-    url: "",
-    data: "",
-    params: "",
-    headers: "",
-    auth: "",
-  });
+    method,
+    url,
+    headers,
+    data,
+    params,
+  })
+    .then((res) => {
+      return res;
+    })
+    .catch((err) => {
+      return err;
+    });
 };
 
 export default axios;

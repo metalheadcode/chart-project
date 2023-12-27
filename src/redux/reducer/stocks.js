@@ -1,10 +1,11 @@
 import * as constants from "../constant/stocks";
 
 const initialState = {
-  data: null,
+  data: [],
   error: null,
   loading: false,
 };
+
 export const stocksReducer = (state = initialState, action) => {
   switch (action.type) {
     case constants.GET_STOCKS_BY_MARKET_REQUEST: {
