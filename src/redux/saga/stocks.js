@@ -4,20 +4,16 @@ import * as constants from "../constant/stocks";
 import * as functions from "../function/stocks";
 
 function* getStockByMarket({ market, onCallback }) {
-  console.log("II", market);
   const { status, data, error } = yield call(axiosCall, {
     url: `/symbol/${market}`,
     method: "get",
   });
-
-  console.log("APA RESPONNYA", status, data, error);
-
   if (status === 200) {
     onCallback({
       status: 1,
       data,
     });
-    yield put(functions.stockMyMarketSuccess(data));
+    yield put(functions.stockMyMarketSuccess(data, market));
   } else {
     onCallback({
       status: 0,

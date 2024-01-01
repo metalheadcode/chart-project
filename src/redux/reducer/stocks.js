@@ -2,6 +2,7 @@ import * as constants from "../constant/stocks";
 
 const initialState = {
   data: [],
+  market: null,
   error: null,
   loading: false,
 };
@@ -19,6 +20,7 @@ export const stocksReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         data: action.data,
+        market: action.market,
       };
     }
     case constants.GET_STOCKS_BY_MARKET_FAILURE: {
