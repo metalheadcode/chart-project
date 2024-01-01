@@ -32,7 +32,8 @@ export const axiosCall = async (config) => {
   let method = config.method;
   // URL
   // let url = config.url;
-  let url = `${process.env.REACT_APP_API_URL}${config.url}?apikey=${process.env.REACT_APP_API_KEY}`;
+
+  let url = `${process.env.REACT_APP_API_URL}${config.url}`;
 
   // HEADERS
   let headers;
