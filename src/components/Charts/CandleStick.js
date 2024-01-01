@@ -165,8 +165,8 @@ function CandleStick({
   const [unit, setUnit] = useState("d");
 
   return (
-    <div className="border border-blue-600 p-3 rounded-xl bg-white shadow-lg">
-      <div className="border border-slate-100 p-3 rounded-lg mb-2 flex gap-3">
+    <div className="border border-blue-600 p-3 shadow-lg">
+      <div className="border border-slate-800 bg-slate-900 p-3 rounded-lg mb-2 flex gap-3">
         <Select
           options={[
             { label: "Day", value: "d" },

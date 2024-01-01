@@ -88,12 +88,17 @@ function SearchSymbolModal({
       ariaHideApp={false}
       isOpen={open}
       onRequestClose={onClose}
+      style={{
+        overlay: {
+          background: "rgba(0,0,0,0.7)",
+        },
+      }}
       className="w-1/3 rounded-2xl absolute top-1/4 left-1/3 right-1/3 bottom-auto"
     >
-      <div className="bg-white p-3 shadow-lg rounded-2xl border border-slate-200 flex flex-col gap-2 h-96">
+      <div className=" p-3 shadow-lg rounded-2xl border border-slate-800 bg-slate-900 flex flex-col gap-2 h-96">
         <input
           placeholder="Search Symbol"
-          className="border border-slate-200 bg-slate-100 p-2 rounded-lg"
+          className="border border-slate-800 bg-slate-900 p-2 rounded-lg text-slate-100"
           onChange={(event) => {
             const value = event.target.value;
             const capital = value.toUpperCase();
@@ -132,16 +137,16 @@ function SearchSymbolModal({
                 // CLOSE MODAL
                 onClose();
               }}
-              className="border border-slate-100 p-2 rounded-lg bg-slate-50 flex justify-between w-full"
+              className="border border-slate-700 bg-slate-800 hover:bg-slate-700 p-2 rounded-lg  flex justify-between w-full"
             >
               <div className="w-4/6">
-                <p className="text-slate-800 font-bold text-xl">
+                <p className="text-slate-100 font-bold text-xl">
                   {item.symbol}
                 </p>
-                <p className="text-slate-600 font-light text-sm">{item.name}</p>
+                <p className="text-slate-50 font-light text-sm">{item.name}</p>
               </div>
-              <div className="w-2/6 border border-slate-300 bg-white rounded-md flex justify-center items-center">
-                <p className="text-slate-600 font-bold text-2xl">
+              <div className="w-2/6 border border-slate-800 bg-slate-900 rounded-md flex justify-center items-center">
+                <p className="text-slate-50 font-bold text-2xl">
                   $ {item.price}
                 </p>
               </div>

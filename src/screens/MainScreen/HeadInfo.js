@@ -6,8 +6,8 @@ import { useSelector } from "react-redux";
 function LabelAndData({ label = "Label", data = "", dataClassName = "" }) {
   return (
     <div>
-      <p className="text-slate-400 text-xs">{label}</p>
-      <p className={`text-slate-500 text-lg font-bold ${dataClassName}`}>
+      <p className="text-slate-500 text-xs">{label}</p>
+      <p className={`text-slate-50 text-lg font-bold ${dataClassName}`}>
         {data}
       </p>
     </div>
@@ -17,7 +17,7 @@ function LabelAndData({ label = "Label", data = "", dataClassName = "" }) {
 function HeadInfo({ symbol, setOpenMarketModal }) {
   const { marketStr } = useSelector((state) => state.stocks);
   return (
-    <div className="bg-white border border-slate-200 shadow-lg p-3 rounded-xl">
+    <div className="shadow-lg p-3 border-b border-slate-800 border-dotted bg-slate-900">
       {/* TOP INFORMATION HEADER START HERE */}
       <div className="flex justify-between items-center mb-3">
         <div
@@ -28,27 +28,27 @@ function HeadInfo({ symbol, setOpenMarketModal }) {
             onClick={() => {
               setOpenMarketModal(true);
             }}
-            className="hover:bg-white hover:shadow-md bg-slate-50 text-lg font-bold border border-slate-100 p-2 rounded-lg"
+            className="hover:bg-slate-700 hover:shadow-md bg-slate-900 text-lg font-bold border border-slate-800 p-2 rounded-lg"
           >
-            {marketStr}
+            <p className="text-slate-100">{marketStr}</p>
           </button>
-          <CgArrowRight />
+          <CgArrowRight className="text-slate-700" />
           <button
             onClick={() => {
               setOpenMarketModal(true);
             }}
-            className="hover:bg-white hover:shadow-md bg-slate-50 text-lg font-bold border border-slate-100 p-2 rounded-lg"
+            className="hover:bg-green-500 hover:shadow-md bg-green-500 text-lg font-bold border border-slate-800 p-2 rounded-lg"
           >
-            {symbol.symbol}
+            <p className="text-slate-50">{symbol.symbol}</p>
           </button>
         </div>
         <div className="m-2">
-          <h2 className="text-lg">{symbol.name}</h2>
+          <h2 className="text-3xl text-slate-100 font-bold">{symbol.name}</h2>
         </div>
       </div>
       {/* TOP INFORMATION HEADER END HERE */}
 
-      <div className="flex justify-between items-center border border-slate-100 rounded-lg p-3 bg-white">
+      <div className="flex justify-between items-center border border-slate-800 rounded-lg p-3 bg-slate-900">
         <LabelAndData
           label="Price"
           data={`$ ${symbol.price}`}

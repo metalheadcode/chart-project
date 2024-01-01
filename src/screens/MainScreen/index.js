@@ -50,7 +50,7 @@ function MainScreen() {
   }, [data]);
 
   return (
-    <div className="relative m-0 p-0">
+    <div className="relative">
       <SearchSymbolModal
         open={openMarketModal}
         onClose={() => setOpenMarketModal(false)}
@@ -64,7 +64,7 @@ function MainScreen() {
         numOfDay={numOfDay}
         symbolLog={symbolLog}
       />
-      <div className="flex flex-col gap-2 m-3 z-0">
+      <div className="flex flex-col z-0">
         {symbol !== null && (
           <HeadInfo
             symbol={symbol}
