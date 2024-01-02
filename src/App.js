@@ -1,7 +1,5 @@
 import MainScreen from "./screens/MainScreen";
-import Marquee from "react-fast-marquee";
 function App() {
-  const tempNews = ["news 1", "news 2"];
   return (
     <div className="">
       <div className="p-2 flex">
@@ -11,16 +9,6 @@ function App() {
             ChartProject
           </p>
         </div>
-        <Marquee className="w-full">
-          {tempNews.map((text, index) => (
-            <div
-              key={index}
-              className="mr-2"
-            >
-              <p className="text-slate-100 font-light text-xs">{text}</p>
-            </div>
-          ))}
-        </Marquee>
       </div>
       <MainScreen />
       <div className="absolute bottom-0 left-0 right-0 bg-slate-900">

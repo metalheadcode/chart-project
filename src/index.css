@@ -32,6 +32,8 @@ body {
 
 textarea:focus,
 div:focus,
+option:focus,
+select:focus,
 input:focus {
   outline: none;
 }

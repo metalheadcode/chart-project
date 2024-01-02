@@ -24,13 +24,12 @@ function CandleStick({
         const {
           ctx,
           data,
-
           scales: { y },
         } = chart;
 
         ctx.save();
         ctx.lineWidth = 1.5;
-        ctx.strokeStyle = "rgba(0,0,0,1)";
+        ctx.strokeStyle = "rgb(250,250,250)";
 
         data.datasets[0].data.forEach((item, index) => {
           // TOP SHADOW
@@ -101,6 +100,27 @@ function CandleStick({
     //     // });
     //   },
     // };
+
+    const minAndMaxDatasets = (dataset) => {
+      let max = dataset[0].h;
+      let min = dataset[0].l;
+
+      for (let i = 0; i < dataset.length; i++) {
+        const value = dataset[i];
+
+        // h HIGHER THAN MAX ?
+        if (value.h > max) {
+          max = value.h;
+        }
+
+        // l LOWER THAN MIN ?
+        if (value.l < min) {
+          min = value.l;
+        }
+      }
+
+      return { min, max };
+    };
     const config = {
       type: "bar",
       data: {
@@ -110,7 +130,6 @@ function CandleStick({
             label: symbol.symbol,
             data: chartDatasets,
             backgroundColor: chartDatasetColors,
-            borderColor: "rgba(0,0,0,1)",
             borderWidth: 1.5,
             borderSkipped: false, // FIX BORDER BOTTOM MISSING
           },
@@ -137,8 +156,18 @@ function CandleStick({
             },
           },
           y: {
-            beginAtZero: true,
-            grace: "20%",
+            position: "right",
+            grid: {
+              color: "rgb(30 41 59)", // options.scales.y.grid.color
+            },
+            min: minAndMaxDatasets(chartDatasets).min,
+            max: minAndMaxDatasets(chartDatasets).max,
+            ticks: {
+              stepSize:
+                (minAndMaxDatasets(chartDatasets).max -
+                  minAndMaxDatasets(chartDatasets).min) /
+                20, // VALUE NI YANG BUATKAN MAKIN DETAILS
+            },
           },
         },
       },
@@ -165,8 +194,8 @@ function CandleStick({
   const [unit, setUnit] = useState("d");
 
   return (
-    <div className="border border-blue-600 p-3 shadow-lg">
-      <div className="border border-slate-800 bg-slate-900 p-3 rounded-lg mb-2 flex gap-3">
+    <div className="border-y border-slate-800 bg-slate-900 p-3 shadow-lg">
+      <div className="border border-slate-800 bg-slate-950 p-3 rounded-lg mb-2 flex gap-3">
         <Select
           options={[
             { label: "Day", value: "d" },

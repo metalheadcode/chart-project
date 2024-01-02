@@ -1,11 +1,13 @@
 import * as constants from "../constant/stocks";
 
 import tempData from "../../utils/tempDummyData.json";
+import tempPrices from "../../utils/tempDummyPrices.json";
 
 const initialState = {
   data: [...tempData.data],
   marketStr: "NASDAQ",
-  symbolStr: null,
+  prices: [...tempPrices.prices],
+  symbolStr: "AACIW",
   error: null,
   loading: false,
 };

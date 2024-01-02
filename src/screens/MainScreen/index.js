@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import CandleStick from "../../components/Charts/CandleStick";
 import { GET_STOCKS_BY_MARKET_REQUEST } from "../../redux/constant/stocks";
 import HeadInfo from "./HeadInfo";
+import Marquee from "react-fast-marquee";
 import SearchSymbolModal from "./SearchSymbolModal";
 
 function MainScreen() {
@@ -17,7 +18,32 @@ function MainScreen() {
 
   // STATES
   const [chartData, setChartData] = useState([]);
-  const [symbol, setSymbol] = useState(null);
+  const [symbol, setSymbol] = useState({
+    symbol: "AACIW",
+    name: "Armada Acquisition Corp. I",
+    price: 0.025,
+    changesPercentage: 0,
+    change: 0,
+    dayLow: 0.025,
+    dayHigh: 0.0251,
+    yearHigh: 0.0251,
+    yearLow: 0.025,
+    marketCap: 215300,
+    priceAvg50: 0,
+    priceAvg200: 0,
+    exchange: "NASDAQ",
+    volume: 6200,
+    avgVolume: 0,
+    open: 0.02505,
+    previousClose: 0.025,
+    eps: 0,
+    pe: null,
+    earningsAnnouncement: "2023-03-31T00:00:00.000+0000",
+    sharesOutstanding: 8612000,
+    timestamp: 1703192328,
+  });
+
+  console.log("SYMBOL", symbol);
 
   // CHART STATE
   const [chartLabels, setChartLabels] = useState(null);
@@ -25,6 +51,8 @@ function MainScreen() {
   const [chartDatasetColors, setChartDatasetColors] = useState(null);
   const [numOfDay, setNumOfDay] = useState(30);
 
+  console.log("chartLabels", chartLabels);
+  console.log("chartDatasets", chartDatasets);
   // FUNCTIONS
   const getStocksByMarket = (m) => {
     dispatch({
@@ -64,6 +92,7 @@ function MainScreen() {
         numOfDay={numOfDay}
         symbolLog={symbolLog}
       />
+
       <div className="flex flex-col z-0">
         {symbol !== null && (
           <HeadInfo
@@ -71,6 +100,20 @@ function MainScreen() {
             setOpenMarketModal={setOpenMarketModal}
           />
         )}
+
+        <div>
+          <Marquee className="w-full">
+            {["news 1", "news 2"].map((text, index) => (
+              <div
+                key={index}
+                className="mr-2"
+              >
+                <p className="text-slate-100 font-light text-xs">{text}</p>
+              </div>
+            ))}
+          </Marquee>
+        </div>
+
         <div className="flex gap-2">
           {symbol !== null &&
             chartLabels !== null &&

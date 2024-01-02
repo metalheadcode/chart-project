@@ -3,18 +3,20 @@ import React from "react";
 function Select({ options = [], onSelect, value, label = "Label" }) {
   const val = options.find((item) => item.value === value);
   return (
-    <div className="">
-      <div
-        className=" text-slate-500"
-        style={{ marginBottom: 7, marginLeft: 2 }}
-      >
-        <p className="text-xs text-slate-500">{label}</p>
+    <div className="border border-slate-800 bg-slate-900 rounded-md px-2 py-1">
+      <div className="text-slate-500">
+        <p
+          className="text-xs text-slate-500"
+          style={{ fontSize: 8 }}
+        >
+          {label}
+        </p>
       </div>
-      <div className="mt-1">
+      {value !== undefined && (
         <select
           value={val === undefined ? "Please Choose" : val.label}
           id="days-input-option"
-          className="mt-1 border border-slate-200 p-3 rounded-md"
+          className="bg-slate-900  text-slate-100"
           onChange={(event) => {
             const value = event.target.value;
             const finalVal = options.find((item) => item.label === value).value;
@@ -26,10 +28,12 @@ function Select({ options = [], onSelect, value, label = "Label" }) {
           }}
         >
           {options.map((item, index) => (
-            <option key={index}>{item.label}</option>
+            <option key={index}>
+              <p className="text-slate-100">{item.label}</p>
+            </option>
           ))}
         </select>
-      </div>
+      )}
     </div>
   );
 }
