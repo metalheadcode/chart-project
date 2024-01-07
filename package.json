@@ -11,6 +11,10 @@
     "chartjs-adapter-date-fns": "^3.0.0",
     "chartjs-plugin-streaming": "^2.0.0",
     "chartjs-plugin-zoom": "^2.0.1",
+    "d3-dsv": "^3.0.1",
+    "d3-format": "^3.1.0",
+    "d3-scale": "^4.0.2",
+    "d3-time-format": "^4.1.0",
     "date-fns": "^3.0.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -50,6 +54,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "redux-devtools": "^3.7.0"
   }
 }

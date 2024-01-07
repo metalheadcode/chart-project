@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
-import { format, parse, subDays } from "date-fns";
+import { format, subDays } from "date-fns";
 import { useDispatch, useSelector } from "react-redux";
 
 import { GET_HISTORY_PRICES_BY_SYMBOL_REQUEST } from "../../redux/constant/stocks";
 import ReactModal from "react-modal";
-import { timeParse } from "d3-time-format";
+
+// import { timeParse } from "d3-time-format";
 
 function SearchSymbolModal({
   open,
