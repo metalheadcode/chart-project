@@ -1,22 +1,17 @@
-import React, { useEffect } from "react";
 import { format, subDays } from "date-fns";
 import { useDispatch, useSelector } from "react-redux";
 
 import { GET_HISTORY_PRICES_BY_SYMBOL_REQUEST } from "../../redux/constant/stocks";
+import React from "react";
 import ReactModal from "react-modal";
-
-// import { timeParse } from "d3-time-format";
+import { timeParse } from "d3-time-format";
 
 function SearchSymbolModal({
   open,
   onClose,
   chartData,
-  symbol,
   setSymbol,
-  setChartLabels,
-  // setChartDatasets,
   setD3Datasets,
-  // setChartDatasetColors,
   setChartData,
   numOfDay,
   symbolLog,
@@ -32,88 +27,24 @@ function SearchSymbolModal({
       to,
       onCallback: (response) => {
         if (response.status === 1) {
-          // const firstThirtyDays = response.data?.historical?.slice(0, numOfDay);
+          let finalD3Datasets = [];
 
-          // setChartLabels(firstThirtyDays.map((item) => item.date));
+          for (let i = 0; i < response.data?.historical.length; i++) {
+            const item = response.data?.historical[i];
 
-          // let finalDatasets = [];
-          // let colorEachcandle = [];
-          // let finalD3Datasets = [];
+            const finalObjD3 = {
+              ...item,
+              date: timeParse("%Y-%m-%d")(item.date),
+            };
 
-          // console.log("thirty days", firstThirtyDays);
+            finalD3Datasets.unshift(finalObjD3);
+          }
 
-          // for (let i = 0; i < numOfDay; i++) {
-          //   const date = firstThirtyDays[i].date;
-          //   const open = firstThirtyDays[i].open;
-          //   const high = firstThirtyDays[i].high;
-          //   const low = firstThirtyDays[i].low;
-          //   const close = firstThirtyDays[i].close;
-          //   const volume = firstThirtyDays[i].volume;
-
-          //   // if (open > close) colorEachcandle.push("rgba(255,26,104,1)");
-          //   // if (open < close) colorEachcandle.push("rgba(75,192,192,1)");
-          //   // if (open === close) colorEachcandle.push("rgba(0,0,0,1)");
-
-          //   // const finalObj = {
-          //   //   x: date,
-          //   //   o: open,
-          //   //   h: high,
-          //   //   l: low,
-          //   //   c: close,
-          //   //   s: [open, close],
-          //   // };
-
-          //   const finalObjD3 = {
-          //     date: timeParse("%Y-%m-%d")(date),
-          //     // date,
-          //     open,
-          //     high,
-          //     low,
-          //     close,
-          //     volume,
-          //   };
-
-          //   // finalDatasets.push(finalObj);
-          //   finalD3Datasets.push(finalObjD3);
-          // }
-
-          // setChartDatasets(finalDatasets);
-          // setChartDatasetColors(colorEachcandle);
-
-          // MAKE THEM DESCEND
-          // const descend = response.data?.historical.sort(
-          //   (a, b) =>
-          //     new Date(parse(b.date, "yyyy-MM-dd")) -
-          //     new Date(parse(a.date, "yyyy-MM-dd"))
-          // );
-          const descend = response.data?.historical.sort(
-            (a, b) => new Date(a.date) - new Date(b.date)
-          );
-
-          console.log("DATA YANG SEBENAR", descend);
-
-          return setD3Datasets(descend);
+          return setD3Datasets(finalD3Datasets);
         }
       },
     });
   };
-
-  useEffect(() => {
-    if (symbol !== null && symbolLog.current !== null) {
-      const symLog = symbolLog.current[symbol.symbol];
-      if (symLog !== undefined) {
-        const noDiff = symLog.numOfDay === numOfDay;
-        if (!noDiff) {
-          fetchChart(
-            symbol.symbol,
-            symbolLog.current[symbol.symbol].from,
-            symbolLog.current[symbol.symbol].to
-          );
-        }
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [numOfDay]);
 
   return (
     <ReactModal
@@ -125,7 +56,7 @@ function SearchSymbolModal({
           background: "rgba(0,0,0,0.7)",
         },
       }}
-      className="w-1/3 rounded-2xl absolute top-1/4 left-1/3 right-1/3 bottom-auto"
+      className="z-50 w-1/3 rounded-2xl absolute top-1/4 left-1/3 right-1/3 bottom-auto"
     >
       <div className=" p-3 shadow-lg rounded-2xl border border-slate-800 bg-slate-900 flex flex-col gap-2 h-96">
         <input

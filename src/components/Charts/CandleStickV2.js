@@ -10,11 +10,19 @@ import { utcDay } from "d3-time";
 
 function CandleStickV2({ datasets }) {
   const { symbolStr } = useSelector((state) => state.stocks);
-  console.log("WHYYYYYY", datasets);
   if (datasets === undefined) {
     return (
       <div>
-        <p>Cari Punca kenapa datasets undefined...</p>
+        <p>
+          undefined datasets, please contact our developers at
+          <a
+            id="email"
+            type="email"
+            href="metalheadcoder@gmail.com"
+          >
+            metalheadcoder@gmail.com
+          </a>
+        </p>
       </div>
     );
   }
@@ -22,7 +30,6 @@ function CandleStickV2({ datasets }) {
   if (datasets !== undefined) {
     const xAccessor = (d) => {
       if (d !== undefined) {
-        console.log("WHYYYYYY II", d);
         return d.date;
       }
     };

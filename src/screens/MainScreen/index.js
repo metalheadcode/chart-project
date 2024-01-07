@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import CandleStick from "../../components/Charts/CandleStick";
 import CandleStickV2 from "../../components/Charts/CandleStickV2";
 import { GET_STOCKS_BY_MARKET_REQUEST } from "../../redux/constant/stocks";
 import HeadInfo from "./HeadInfo";
@@ -11,7 +10,7 @@ import SearchSymbolModal from "./SearchSymbolModal";
 function MainScreen() {
   // HOOKS
   const dispatch = useDispatch();
-  const { data, marketStr } = useSelector((state) => state.stocks);
+  const { data, marketStr, loading } = useSelector((state) => state.stocks);
   const symbolLog = useRef(null);
 
   // MODALS
@@ -44,17 +43,10 @@ function MainScreen() {
     timestamp: 1703192328,
   });
 
-  console.log("SYMBOL", symbol);
-
   // CHART STATE
-  const [chartLabels, setChartLabels] = useState(null);
-  const [chartDatasets, setChartDatasets] = useState(null);
   const [d3Datasets, setD3Datasets] = useState(null);
-  const [chartDatasetColors, setChartDatasetColors] = useState(null);
   const [numOfDay, setNumOfDay] = useState(30);
 
-  console.log("chartLabels", chartLabels);
-  console.log("chartDatasets", chartDatasets);
   // FUNCTIONS
   const getStocksByMarket = (m) => {
     dispatch({
@@ -79,20 +71,14 @@ function MainScreen() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
-  console.log("DATA TABLE", d3Datasets);
-
   return (
     <div className="relative">
       <SearchSymbolModal
         open={openMarketModal}
         onClose={() => setOpenMarketModal(false)}
         chartData={chartData}
-        symbol={symbol}
         setSymbol={setSymbol}
-        setChartLabels={setChartLabels}
-        setChartDatasets={setChartDatasets}
         setD3Datasets={setD3Datasets}
-        setChartDatasetColors={setChartDatasetColors}
         setChartData={setChartData}
         numOfDay={numOfDay}
         symbolLog={symbolLog}
@@ -120,23 +106,13 @@ function MainScreen() {
         </div>
 
         <div className="flex gap-2">
-          {/* {symbol !== null &&
-            chartLabels !== null &&
-            chartDatasets !== null && (
-              <div className="w-full">
-                <CandleStick
-                  symbol={symbol}
-                  chartDatasets={chartDatasets}
-                  chartDatasetColors={chartDatasetColors}
-                  numOfDay={numOfDay}
-                  setNumOfDay={setNumOfDay}
-                  symbolLog={symbolLog}
-                />
-              </div>
-            )} */}
-
-          {d3Datasets !== null && d3Datasets !== undefined && (
-            <div className="w-full">
+          {loading && (
+            <div className="h-full w-full flex justify-center items-center">
+              <p>Fetching data...</p>
+            </div>
+          )}
+          {!loading && d3Datasets !== null && d3Datasets !== undefined && (
+            <div className="w-full z-0">
               <CandleStickV2 datasets={d3Datasets} />
             </div>
           )}
