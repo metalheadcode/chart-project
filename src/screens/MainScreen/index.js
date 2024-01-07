@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import CandleStick from "../../components/Charts/CandleStick";
+import CandleStickV2 from "../../components/Charts/CandleStickV2";
 import { GET_STOCKS_BY_MARKET_REQUEST } from "../../redux/constant/stocks";
 import HeadInfo from "./HeadInfo";
 import Marquee from "react-fast-marquee";
@@ -48,6 +49,7 @@ function MainScreen() {
   // CHART STATE
   const [chartLabels, setChartLabels] = useState(null);
   const [chartDatasets, setChartDatasets] = useState(null);
+  const [d3Datasets, setD3Datasets] = useState(null);
   const [chartDatasetColors, setChartDatasetColors] = useState(null);
   const [numOfDay, setNumOfDay] = useState(30);
 
@@ -77,6 +79,8 @@ function MainScreen() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
+  console.log("DATA TABLE", d3Datasets);
+
   return (
     <div className="relative">
       <SearchSymbolModal
@@ -87,6 +91,7 @@ function MainScreen() {
         setSymbol={setSymbol}
         setChartLabels={setChartLabels}
         setChartDatasets={setChartDatasets}
+        setD3Datasets={setD3Datasets}
         setChartDatasetColors={setChartDatasetColors}
         setChartData={setChartData}
         numOfDay={numOfDay}
@@ -115,7 +120,7 @@ function MainScreen() {
         </div>
 
         <div className="flex gap-2">
-          {symbol !== null &&
+          {/* {symbol !== null &&
             chartLabels !== null &&
             chartDatasets !== null && (
               <div className="w-full">
@@ -128,7 +133,13 @@ function MainScreen() {
                   symbolLog={symbolLog}
                 />
               </div>
-            )}
+            )} */}
+
+          {d3Datasets !== null && d3Datasets !== undefined && (
+            <div className="w-full">
+              <CandleStickV2 datasets={d3Datasets} />
+            </div>
+          )}
         </div>
       </div>
     </div>

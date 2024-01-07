@@ -4,6 +4,9 @@ import React, { useEffect, useRef, useState } from "react";
 
 import Chart from "chart.js/auto";
 import Select from "../Inputs/Select";
+import zoomPlugin from "chartjs-plugin-zoom";
+
+Chart.register(zoomPlugin);
 
 function CandleStick({
   symbol,
@@ -58,48 +61,6 @@ function CandleStick({
         });
       },
     };
-
-    // const customScale = {
-    //   id: "customScale",
-    //   afterDatasetsDraw(chart, args, pluginOptions) {
-    //     const {
-    //       ctx,
-    //       data,
-    //       chartArea: { top, bottom, left, right, width, height },
-    //       scales: { x, y },
-    //     } = chart;
-
-    //     ctx.save();
-
-    //     ctx.textAlign = "center";
-    //     // ctx.font = "bold 12 px sans-serif";
-    //     // ctx.fillStyle = "rgba(102, 102, 102, 1)";
-
-    //     ctx.fillText(
-    //       parse(
-    //         data.datasets[0].data[0].x,
-    //         "yyyy-MM-dd",
-    //         new Date()
-    //       ).toLocaleString("en", {
-    //         day: "numeric",
-    //         month: "short",
-    //       }),
-    //       x.getPixelForValue(String(data.datasets[0].data[0].x)),
-    //       bottom + 20
-    //     );
-
-    //     // data.datasets[0].data.forEach((datapoint) => {
-    //     //   ctx.textAlign = "center";
-    //     //   ctx.font = "bold 12 px sans-serif";
-    //     //   ctx.fillStyle = "rgba(102, 102, 102, 1)";
-    //     //   ctx.fillText(
-    //     //     new Date(datapoint.x).toLocaleString("en", dataOptions),
-    //     //     x.getPixelForValue(datapoint.x),
-    //     //     bottom + 20
-    //     //   );
-    //     // });
-    //   },
-    // };
 
     const minAndMaxDatasets = (dataset) => {
       let max = dataset[0].h;
@@ -167,6 +128,19 @@ function CandleStick({
                 (minAndMaxDatasets(chartDatasets).max -
                   minAndMaxDatasets(chartDatasets).min) /
                 20, // VALUE NI YANG BUATKAN MAKIN DETAILS
+            },
+          },
+        },
+        plugins: {
+          zoom: {
+            zoom: {
+              wheel: {
+                enabled: true,
+              },
+              pinch: {
+                enabled: true,
+              },
+              mode: "y",
             },
           },
         },

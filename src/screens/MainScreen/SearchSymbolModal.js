@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
-import { format, subDays } from "date-fns";
+import { format, parse, subDays } from "date-fns";
 import { useDispatch, useSelector } from "react-redux";
 
 import { GET_HISTORY_PRICES_BY_SYMBOL_REQUEST } from "../../redux/constant/stocks";
 import ReactModal from "react-modal";
+import { timeParse } from "d3-time-format";
 
 function SearchSymbolModal({
   open,
@@ -12,8 +13,9 @@ function SearchSymbolModal({
   symbol,
   setSymbol,
   setChartLabels,
-  setChartDatasets,
-  setChartDatasetColors,
+  // setChartDatasets,
+  setD3Datasets,
+  // setChartDatasetColors,
   setChartData,
   numOfDay,
   symbolLog,
@@ -29,38 +31,67 @@ function SearchSymbolModal({
       to,
       onCallback: (response) => {
         if (response.status === 1) {
-          const firstThirtyDays = response.data?.historical?.slice(0, numOfDay);
+          // const firstThirtyDays = response.data?.historical?.slice(0, numOfDay);
 
-          setChartLabels(firstThirtyDays.map((item) => item.date));
+          // setChartLabels(firstThirtyDays.map((item) => item.date));
 
-          let finalDatasets = [];
-          let colorEachcandle = [];
+          // let finalDatasets = [];
+          // let colorEachcandle = [];
+          // let finalD3Datasets = [];
 
-          for (let i = 0; i < numOfDay; i++) {
-            const date = firstThirtyDays[i].date;
-            const open = firstThirtyDays[i].open;
-            const high = firstThirtyDays[i].high;
-            const low = firstThirtyDays[i].low;
-            const close = firstThirtyDays[i].close;
+          // console.log("thirty days", firstThirtyDays);
 
-            if (open > close) colorEachcandle.push("rgba(255,26,104,1)");
-            if (open < close) colorEachcandle.push("rgba(75,192,192,1)");
-            if (open === close) colorEachcandle.push("rgba(0,0,0,1)");
+          // for (let i = 0; i < numOfDay; i++) {
+          //   const date = firstThirtyDays[i].date;
+          //   const open = firstThirtyDays[i].open;
+          //   const high = firstThirtyDays[i].high;
+          //   const low = firstThirtyDays[i].low;
+          //   const close = firstThirtyDays[i].close;
+          //   const volume = firstThirtyDays[i].volume;
 
-            const finalObj = {
-              x: date,
-              o: open,
-              h: high,
-              l: low,
-              c: close,
-              s: [open, close],
-            };
+          //   // if (open > close) colorEachcandle.push("rgba(255,26,104,1)");
+          //   // if (open < close) colorEachcandle.push("rgba(75,192,192,1)");
+          //   // if (open === close) colorEachcandle.push("rgba(0,0,0,1)");
 
-            finalDatasets.push(finalObj);
-          }
+          //   // const finalObj = {
+          //   //   x: date,
+          //   //   o: open,
+          //   //   h: high,
+          //   //   l: low,
+          //   //   c: close,
+          //   //   s: [open, close],
+          //   // };
 
-          setChartDatasets(finalDatasets);
-          setChartDatasetColors(colorEachcandle);
+          //   const finalObjD3 = {
+          //     date: timeParse("%Y-%m-%d")(date),
+          //     // date,
+          //     open,
+          //     high,
+          //     low,
+          //     close,
+          //     volume,
+          //   };
+
+          //   // finalDatasets.push(finalObj);
+          //   finalD3Datasets.push(finalObjD3);
+          // }
+
+          // setChartDatasets(finalDatasets);
+          // setChartDatasetColors(colorEachcandle);
+
+          // MAKE THEM DESCEND
+          // const descend = response.data?.historical.sort(
+          //   (a, b) =>
+          //     new Date(parse(b.date, "yyyy-MM-dd")) -
+          //     new Date(parse(a.date, "yyyy-MM-dd"))
+          // );
+          const descend = response.data?.historical.sort(
+            (a, b) => new Date(a.date) - new Date(b.date)
+          );
+
+          console.log("DATA YANG SEBENAR", descend);
+
+          return setD3Datasets(descend);
         }
       },
     });
@@ -120,7 +151,7 @@ function SearchSymbolModal({
               onClick={() => {
                 // FETCH NEW CHART INFO
                 const from = format(new Date(), "yyyy-MM-dd");
-                const to = format(subDays(new Date(), 10), "yyyy-MM-dd");
+                const to = format(subDays(new Date(), numOfDay), "yyyy-MM-dd");
 
                 setSymbol(item);
                 fetchChart(item.symbol, from, to);
