@@ -27,7 +27,7 @@
 
 body {
   overflow: hidden; /* Hide scrollbars */
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgb(15, 23, 42);
 }
 
 textarea:focus,
