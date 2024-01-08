@@ -6,6 +6,7 @@ import { GET_STOCKS_BY_MARKET_REQUEST } from "../../redux/constant/stocks";
 import HeadInfo from "./HeadInfo";
 import Marquee from "react-fast-marquee";
 import SearchSymbolModal from "./SearchSymbolModal";
+import SideInfo from "./SideInfo";
 
 function MainScreen() {
   // HOOKS
@@ -84,37 +85,50 @@ function MainScreen() {
         symbolLog={symbolLog}
       />
 
-      <div className="flex flex-col z-0">
-        {symbol !== null && (
-          <HeadInfo
-            symbol={symbol}
-            setOpenMarketModal={setOpenMarketModal}
-          />
-        )}
+      <div className="z-0 flex flex-row">
+        {/* --- LEFT SIDE ---  */}
+        <div className="w-5/6">
+          {symbol !== null && (
+            <HeadInfo
+              symbol={symbol}
+              setOpenMarketModal={setOpenMarketModal}
+            />
+          )}
 
-        <div>
-          <Marquee className="w-full">
-            {["news 1", "news 2"].map((text, index) => (
-              <div
-                key={index}
-                className="mr-2"
-              >
-                <p className="text-slate-100 font-light text-xs">{text}</p>
+          <div>
+            <Marquee className="w-full">
+              {["news 1", "news 2"].map((text, index) => (
+                <div
+                  key={index}
+                  className="mr-2"
+                >
+                  <p className="text-slate-100 font-light text-xs">{text}</p>
+                </div>
+              ))}
+            </Marquee>
+          </div>
+
+          <div className="flex gap-2">
+            {loading && (
+              <div className="h-full w-full flex justify-center items-center">
+                <p>Fetching data...</p>
               </div>
-            ))}
-          </Marquee>
+            )}
+            {!loading && d3Datasets !== null && d3Datasets !== undefined && (
+              <div className="w-full z-0">
+                <CandleStickV2 datasets={d3Datasets} />
+              </div>
+            )}
+          </div>
         </div>
 
-        <div className="flex gap-2">
-          {loading && (
-            <div className="h-full w-full flex justify-center items-center">
-              <p>Fetching data...</p>
-            </div>
-          )}
-          {!loading && d3Datasets !== null && d3Datasets !== undefined && (
-            <div className="w-full z-0">
-              <CandleStickV2 datasets={d3Datasets} />
-            </div>
+        {/* --- RIGHT SIDE --- */}
+        <div className="w-1/5">
+          {symbol !== null && (
+            <SideInfo
+              symbol={symbol}
+              setOpenMarketModal={setOpenMarketModal}
+            />
           )}
         </div>
       </div>

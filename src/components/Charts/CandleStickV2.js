@@ -15,22 +15,23 @@ const GREEN_CANDLE = "rgb(74 222 128)"; // bg-green-500
 const RED_CANDLE = "rgb(239 68 68)"; // bg-red-500
 const SUBTLE_BORDER = "rgb(30 41 59)"; // bg-slate-800
 
-// CHART CONFIG
-const margin = { left: 0, right: 50, top: 0, bottom: 50 };
-const height = window.innerHeight - 350;
-const width = window.innerWidth;
-const gridHeight = height - margin.top - margin.bottom;
-const gridWidth = width - margin.left - margin.right;
-
-const showGrid = true;
-const yGrid = showGrid
-  ? { innerTickSize: -1 * gridWidth, tickStrokeOpacity: 0.05 }
-  : {};
-const xGrid = showGrid
-  ? { innerTickSize: -1 * gridHeight, tickStrokeOpacity: 0.05 }
-  : {};
-
 function CandleStickV2({ datasets }) {
+  // CHART CONFIG
+  const margin = { left: 0, right: 50, top: 0, bottom: 50 };
+  const height = window.innerHeight - 350;
+  const width = (window.innerWidth / 6) * 5;
+  const gridHeight = height - margin.top - margin.bottom;
+  const gridWidth = width - margin.left - margin.right;
+
+  const showGrid = true;
+  const yGrid = showGrid
+    ? { innerTickSize: -1 * gridWidth, tickStrokeOpacity: 0.05 }
+    : {};
+  const xGrid = showGrid
+    ? { innerTickSize: -1 * gridHeight, tickStrokeOpacity: 0.05 }
+    : {};
+
+  //
   const { symbolStr } = useSelector((state) => state.stocks);
   if (datasets === undefined) {
     return (
