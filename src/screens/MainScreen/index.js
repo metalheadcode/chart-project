@@ -1,16 +1,18 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import CandleStickV2 from "../../components/Charts/CandleStickV2";
 import { GET_STOCKS_BY_MARKET_REQUEST } from "../../redux/constant/stocks";
 import HeadInfo from "./HeadInfo";
-import Marquee from "react-fast-marquee";
 import SearchSymbolModal from "./SearchSymbolModal";
 import SideInfo from "./SideInfo";
+import SideMenu from "./SideMenu";
+import { SizeContext } from "../../App";
 
 function MainScreen() {
   // HOOKS
   const dispatch = useDispatch();
+  const { size } = useContext(SizeContext);
   const { data, marketStr, loading } = useSelector((state) => state.stocks);
   const symbolLog = useRef(null);
 
@@ -45,6 +47,7 @@ function MainScreen() {
   });
 
   // CHART STATE
+  const [activeMenu, setActiveMenu] = useState(null);
   const [d3Datasets, setD3Datasets] = useState(null);
   const [numOfDay, setNumOfDay] = useState(30);
 
@@ -85,49 +88,53 @@ function MainScreen() {
         symbolLog={symbolLog}
       />
 
+      {/* --- HEADER ---  */}
+      {symbol !== null && (
+        <HeadInfo
+          symbol={symbol}
+          setOpenMarketModal={setOpenMarketModal}
+        />
+      )}
+
       <div className="z-0 flex flex-row">
         {/* --- LEFT SIDE ---  */}
-        <div className="w-5/6">
-          {symbol !== null && (
-            <HeadInfo
-              symbol={symbol}
-              setOpenMarketModal={setOpenMarketModal}
+        <div
+          className="chart-section z-0"
+          style={{
+            width: activeMenu === null ? size.width - 60 : size.width - 330,
+          }}
+        >
+          {loading && (
+            <div className="h-full w-full flex justify-center items-center">
+              <p className="text-white">Fetching data...</p>
+            </div>
+          )}
+          {!loading && d3Datasets !== null && d3Datasets !== undefined && (
+            <CandleStickV2
+              datasets={d3Datasets}
+              activeMenu={activeMenu}
             />
           )}
-
-          <div>
-            <Marquee className="w-full">
-              {["news 1", "news 2"].map((text, index) => (
-                <div
-                  key={index}
-                  className="mr-2"
-                >
-                  <p className="text-slate-100 font-light text-xs">{text}</p>
-                </div>
-              ))}
-            </Marquee>
-          </div>
-
-          <div className="flex gap-2">
-            {loading && (
-              <div className="h-full w-full flex justify-center items-center">
-                <p>Fetching data...</p>
-              </div>
-            )}
-            {!loading && d3Datasets !== null && d3Datasets !== undefined && (
-              <div className="w-full z-0">
-                <CandleStickV2 datasets={d3Datasets} />
-              </div>
-            )}
-          </div>
         </div>
 
         {/* --- RIGHT SIDE --- */}
-        <div className="w-1/5">
+        {activeMenu !== null && (
+          <div
+            className="expand-section z-0"
+            style={{ width: 270 }}
+          >
+            {symbol !== null && <SideInfo activeMenu={activeMenu} />}
+          </div>
+        )}
+
+        <div
+          className="menu-section z-0"
+          style={{ width: 60 }}
+        >
           {symbol !== null && (
-            <SideInfo
-              symbol={symbol}
-              setOpenMarketModal={setOpenMarketModal}
+            <SideMenu
+              activeMenu={activeMenu}
+              setActiveMenu={setActiveMenu}
             />
           )}
         </div>

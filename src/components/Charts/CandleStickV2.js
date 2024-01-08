@@ -1,10 +1,11 @@
 import { Chart, ChartCanvas } from "react-stockcharts";
+import React, { useContext } from "react";
 import { XAxis, YAxis } from "react-stockcharts/lib/axes";
 import { last, timeIntervalBarWidth } from "react-stockcharts/lib/utils";
 
 import { CandlestickSeries } from "react-stockcharts/lib/series";
 import { MouseCoordinateY } from "react-stockcharts/lib/coordinates";
-import React from "react";
+import { SizeContext } from "../../App";
 import { format } from "d3-format";
 import { scaleTime } from "d3-scale";
 import { useSelector } from "react-redux";
@@ -15,11 +16,13 @@ const GREEN_CANDLE = "rgb(74 222 128)"; // bg-green-500
 const RED_CANDLE = "rgb(239 68 68)"; // bg-red-500
 const SUBTLE_BORDER = "rgb(30 41 59)"; // bg-slate-800
 
-function CandleStickV2({ datasets }) {
+function CandleStickV2({ datasets, activeMenu }) {
+  // HOOKS
+  const { size } = useContext(SizeContext);
   // CHART CONFIG
   const margin = { left: 0, right: 50, top: 0, bottom: 50 };
-  const height = window.innerHeight - 350;
-  const width = (window.innerWidth / 6) * 5;
+  const height = size.height - 220;
+  const width = activeMenu === null ? size.width - 60 : size.width - 330;
   const gridHeight = height - margin.top - margin.bottom;
   const gridWidth = width - margin.left - margin.right;
 
@@ -61,7 +64,7 @@ function CandleStickV2({ datasets }) {
       xAccessor(datasets[datasets.length - 100]),
     ];
     return (
-      <div className="border-t border-b border-slate-800">
+      <div className="border-t border-b border-slate-800 z-0">
         <ChartCanvas
           height={height}
           ratio={1}

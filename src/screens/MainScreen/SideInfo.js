@@ -1,98 +1,67 @@
-import { CgArrowDown } from "react-icons/cg";
+import CurrentStock from "./Menu/CurrentStock";
+import IndicatorList from "./Menu/IndicatorList";
 import React from "react";
-import { format } from "date-fns";
-import { useSelector } from "react-redux";
+import { menuList } from "./MenuList";
 
-function LabelAndData({ label = "Label", data = "", dataClassName = "" }) {
+function SideInfo({ activeMenu }) {
   return (
-    <div className="w-full mb-1">
-      <p className="text-slate-500 text-xs">{label}</p>
-      <p className={`text-slate-50 text-lg font-bold ${dataClassName}`}>
-        {data}
-      </p>
-    </div>
-  );
-}
-
-function SideInfo({ symbol, setOpenMarketModal }) {
-  const { marketStr } = useSelector((state) => state.stocks);
-  return (
-    <div className="border border-slate-800 h-full">
-      {/* TOP INFORMATION HEADER START HERE */}
-      <div className="border border-white flex flex-col justify-between items-center">
-        <div className="p-3">
-          <h2 className="text-xl text-slate-100 font-bold">{symbol.name}</h2>
-        </div>
-        <div
-          id=""
-          className="flex flex-col items-center gap-2 w-full p-3"
-        >
-          <button
-            onClick={() => {
-              setOpenMarketModal(true);
-            }}
-            className="w-full hover:bg-slate-700 hover:shadow-md bg-slate-900 text-lg font-bold border border-slate-800 p-2 rounded-lg"
-          >
-            <p className="text-slate-100">{marketStr}</p>
-          </button>
-          <CgArrowDown className="text-slate-700" />
-          <button
-            onClick={() => {
-              setOpenMarketModal(true);
-            }}
-            className="w-full hover:bg-green-500 hover:shadow-md bg-green-500 text-lg font-bold border border-slate-800 p-2 rounded-lg"
-          >
-            <p className="text-slate-50">{symbol.symbol}</p>
-          </button>
-        </div>
+    <div className="border-l border-b border-slate-800 h-full">
+      <div className="border-b border-slate-800 p-3">
+        <p className="text-white text-lg font-bold text-center">
+          {menuList.find((item) => item.id === activeMenu).title}
+        </p>
       </div>
-      {/* TOP INFORMATION HEADER END HERE */}
-
-      <div className="border border-white flex flex-col justify-between p-3 max-h-full">
-        <LabelAndData
-          label="Price"
-          data={`$ ${symbol.price}`}
-        />
-        <LabelAndData
-          label="MA 50"
-          data={`$ ${symbol.priceAvg50}`}
-        />
-        <LabelAndData
-          label="MA 200"
-          data={`$ ${symbol.priceAvg200}`}
-        />
-        <LabelAndData
-          label="Changes"
-          data={symbol.change}
-          dataClassName={
-            Number(symbol.change) < 0 ? "text-red-400" : "text-teal-500"
-          }
-        />
-        <LabelAndData
-          label="Day Low"
-          data={symbol.dayLow}
-        />
-        <LabelAndData
-          label="Day High"
-          data={symbol.dayHigh}
-        />
-        <LabelAndData
-          label="Year Low"
-          data={symbol.yearLow}
-        />
-        <LabelAndData
-          label="Year High"
-          data={symbol.yearHigh}
-        />
-        <LabelAndData
-          label="Market Capital"
-          data={symbol.marketCap}
-        />
-        <LabelAndData
-          label="Time"
-          data={format(symbol.timestamp, "HH:mm")}
-        />
-      </div>
+      {activeMenu === 1 && <CurrentStock />}
+      {activeMenu === 2 && <IndicatorList />}
+      {activeMenu === 3 && (
+        <div className="flex items-center justify-center h-full">
+          <p className="text-white font-bold text-center">
+            Coming soon info 1...
+          </p>
+        </div>
+      )}
+      {activeMenu === 4 && (
+        <div className="flex items-center justify-center h-full">
+          <p className="text-white font-bold text-center">
+            Coming soon info 2...
+          </p>
+        </div>
+      )}
+      {activeMenu === 5 && (
+        <div className="flex items-center justify-center h-full">
+          <p className="text-white font-bold text-center">
+            Coming soon info 3...
+          </p>
+        </div>
+      )}
+      {activeMenu === 6 && (
+        <div className="flex items-center justify-center h-full">
+          <p className="text-white font-bold text-center">
+            Coming soon info 4...
+          </p>
+        </div>
+      )}
+      {activeMenu === 7 && (
+        <div className="flex items-center justify-center h-full">
+          <p className="text-white font-bold text-center">
+            Coming soon info 5...
+          </p>
+        </div>
+      )}
+      {activeMenu === 8 && (
+        <div className="flex items-center justify-center h-full">
+          <p className="text-white font-bold text-center">
+            Coming soon info 6...
+          </p>
+        </div>
+      )}
+      {activeMenu === 9 && (
+        <div className="flex items-center justify-center h-full">
+          <p className="text-white font-bold text-center">
+            Coming soon info 7...
+          </p>
+        </div>
+      )}
     </div>
   );
 }

@@ -1,54 +1,33 @@
-import { CgArrowRight } from "react-icons/cg";
 import React from "react";
 import { format } from "date-fns";
 import { useSelector } from "react-redux";
-
 function LabelAndData({ label = "Label", data = "", dataClassName = "" }) {
   return (
-    <div>
+    <div className="w-full mb-2 border-b border-slate-800 pb-2">
       <p className="text-slate-500 text-xs">{label}</p>
-      <p className={`text-slate-50 text-lg font-bold ${dataClassName}`}>
+      <p
+        className={`text-slate-50 text-2xl font-bold text-right ${dataClassName}`}
+      >
         {data}
       </p>
     </div>
   );
 }
 
-function HeadInfo({ symbol, setOpenMarketModal }) {
-  const { marketStr } = useSelector((state) => state.stocks);
+function CurrentStock() {
+  const { symbolStr, data } = useSelector((state) => state.stocks);
+  const symbol = data.find((item) => item.symbol === symbolStr);
   return (
-    <div className="shadow-lg p-3 border-b border-t border-slate-800 border-dotted bg-slate-900">
+    <>
       {/* TOP INFORMATION HEADER START HERE */}
-      <div className="flex justify-between items-center mb-3">
-        <div
-          id=""
-          className="flex items-center gap-2"
-        >
-          <button
-            onClick={() => {
-              setOpenMarketModal(true);
-            }}
-            className="hover:bg-slate-700 hover:shadow-md bg-slate-900 text-lg font-bold border border-slate-800 p-2 rounded-lg"
-          >
-            <p className="text-slate-100">{marketStr}</p>
-          </button>
-          <CgArrowRight className="text-slate-700" />
-          <button
-            onClick={() => {
-              setOpenMarketModal(true);
-            }}
-            className="hover:bg-green-500 hover:shadow-md bg-green-500 text-lg font-bold border border-slate-800 p-2 rounded-lg"
-          >
-            <p className="text-slate-50">{symbol.symbol}</p>
-          </button>
-        </div>
-        <div className="m-2">
-          <h2 className="text-3xl text-slate-100 font-bold">{symbol.name}</h2>
+      <div className=" flex flex-col justify-between items-center">
+        <div className="p-3">
+          <h2 className="text-xl text-slate-100 font-bold">{symbol.name}</h2>
         </div>
       </div>
       {/* TOP INFORMATION HEADER END HERE */}
 
-      <div className="flex justify-between items-center border border-slate-800 rounded-lg p-3 bg-slate-900">
+      <div className=" flex flex-col justify-between p-3 max-h-full">
         <LabelAndData
           label="Price"
           data={`$ ${symbol.price}`}
@@ -93,8 +72,8 @@ function HeadInfo({ symbol, setOpenMarketModal }) {
           data={format(symbol.timestamp, "HH:mm")}
         />
       </div>
-    </div>
+    </>
   );
 }
 
-export default HeadInfo;
+export default CurrentStock;

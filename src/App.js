@@ -1,23 +1,44 @@
+import { createContext, useLayoutEffect, useState } from "react";
+
 import MainScreen from "./screens/MainScreen";
+
+export const SizeContext = createContext();
+
 function App() {
+  const [size, setSize] = useState({
+    width: 0,
+    height: 0,
+  });
+
+  useLayoutEffect(() => {
+    function updateSize() {
+      setSize({ width: window.innerWidth, height: window.innerHeight });
+    }
+    window.addEventListener("resize", updateSize);
+    updateSize();
+    return () => window.removeEventListener("resize", updateSize);
+  }, []);
+
   return (
-    <div className="">
-      <div className="p-2 flex">
-        <div className="flex mr-2">
-          <div className="h-4 w-4 bg-slate-50 mr-2" />
-          <p className="text-slate-500 text-xs text-center font-light">
-            ChartProject
+    <SizeContext.Provider value={{ size }}>
+      <div className="">
+        <div className="p-2 flex">
+          <div className="flex mr-2">
+            <div className="h-4 w-4 bg-slate-50 mr-2" />
+            <p className="text-slate-500 text-xs text-center font-light">
+              ChartProject
+            </p>
+          </div>
+        </div>
+        <MainScreen />
+        <div className="absolute bottom-0 left-0 right-0 bg-slate-900">
+          <p className="text-slate-500 text-xs py-1 text-center font-light">
+            Copyright Reserved MobileMind-Pro© 2024 . Visit www.mobilemind.pro
+            for more info
           </p>
         </div>
       </div>
-      <MainScreen />
-      <div className="absolute bottom-0 left-0 right-0 bg-slate-900">
-        <p className="text-slate-500 text-xs py-1 text-center font-light">
-          Copyright Reserved MobileMind-Pro© 2024 . Visit www.mobilemind.pro for
-          more info
-        </p>
-      </div>
-    </div>
+    </SizeContext.Provider>
   );
 }
 
