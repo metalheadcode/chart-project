@@ -10,9 +10,25 @@ import { scaleTime } from "d3-scale";
 import { useSelector } from "react-redux";
 import { utcDay } from "d3-time";
 
+// COLOR CONFIG
 const GREEN_CANDLE = "rgb(74 222 128)"; // bg-green-500
 const RED_CANDLE = "rgb(239 68 68)"; // bg-red-500
 const SUBTLE_BORDER = "rgb(30 41 59)"; // bg-slate-800
+
+// CHART CONFIG
+const margin = { left: 0, right: 50, top: 0, bottom: 50 };
+const height = window.innerHeight - 350;
+const width = window.innerWidth;
+const gridHeight = height - margin.top - margin.bottom;
+const gridWidth = width - margin.left - margin.right;
+
+const showGrid = true;
+const yGrid = showGrid
+  ? { innerTickSize: -1 * gridWidth, tickStrokeOpacity: 0.05 }
+  : {};
+const xGrid = showGrid
+  ? { innerTickSize: -1 * gridHeight, tickStrokeOpacity: 0.05 }
+  : {};
 
 function CandleStickV2({ datasets }) {
   const { symbolStr } = useSelector((state) => state.stocks);
@@ -46,10 +62,10 @@ function CandleStickV2({ datasets }) {
     return (
       <div className="border-t border-b border-slate-800">
         <ChartCanvas
-          height={window.innerHeight - 350}
+          height={height}
           ratio={1}
-          width={window.innerWidth}
-          margin={{ left: 0, right: 50, top: 0, bottom: 50 }}
+          width={width}
+          margin={margin}
           type={"svg"}
           seriesName={symbolStr}
           data={datasets}
@@ -67,13 +83,16 @@ function CandleStickV2({ datasets }) {
               ticks={6}
               stroke={SUBTLE_BORDER}
               tickStroke="#FFFFFF"
+              {...xGrid}
             />
             <YAxis
               axisAt="right"
               orient="right"
               ticks={5}
               stroke={SUBTLE_BORDER}
+              strokeBottom={SUBTLE_BORDER}
               tickStroke="#FFFFFF"
+              {...yGrid}
             />
 
             {/* --- NI BAGI ADA DRAGING MOUSE EFFECT --- */}
