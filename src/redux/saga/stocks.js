@@ -7,7 +7,7 @@ import { axiosCall } from "../../utils/customAxios";
 
 function* getStockByMarket({ market, onCallback }) {
   const { status, data, error } = yield call(axiosCall, {
-    url: `/symbol/${market}?apikey=${process.env.REACT_APP_API_KEY}`,
+    url: `/symbol/${market}`,
     method: "get",
   });
   if (status === 200) {
@@ -27,9 +27,10 @@ function* getStockByMarket({ market, onCallback }) {
 
 function* getHistoryPricesBySymbol({ sym, from, to, onCallback }) {
   const { status, data, error } = yield call(axiosCall, {
-    url: `/historical-price-full/${sym}?from=${from}&to=${to}&apikey=${process.env.REACT_APP_API_KEY}`,
+    url: `/historical-price-full/${sym}?from=${from}&to=${to}`,
     method: "get",
   });
+
   if (status === 200) {
     onCallback({
       status: 1,

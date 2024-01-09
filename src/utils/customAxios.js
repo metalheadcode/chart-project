@@ -23,7 +23,13 @@ axios.interceptors.response.use(
     };
   },
   (error) => {
-    // RESTRUCTURE ERROR DEKAT SINI
+    return {
+      status: error.response.status,
+      error: {
+        code: error.response.status,
+        message: error.response.data["Error Message"],
+      },
+    };
   }
 );
 
@@ -50,7 +56,10 @@ export const axiosCall = async (config) => {
     url,
     headers,
     data,
-    params,
+    params: {
+      ...params,
+      apikey: process.env.REACT_APP_API_KEY,
+    },
   })
     .then((res) => {
       return res;
