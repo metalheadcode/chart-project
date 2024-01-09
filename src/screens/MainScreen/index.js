@@ -47,6 +47,7 @@ function MainScreen() {
   });
 
   // CHART STATE
+  const [indicators, setIndicators] = useState(["ema20", "ema50"]);
   const [activeMenu, setActiveMenu] = useState(null);
   const [d3Datasets, setD3Datasets] = useState(null);
   const [numOfDay, setNumOfDay] = useState(30);
@@ -113,6 +114,7 @@ function MainScreen() {
             <CandleStickV2
               datasets={d3Datasets}
               activeMenu={activeMenu}
+              indicators={indicators}
             />
           )}
         </div>
@@ -123,7 +125,13 @@ function MainScreen() {
             className="expand-section z-0"
             style={{ width: 270 }}
           >
-            {symbol !== null && <SideInfo activeMenu={activeMenu} />}
+            {symbol !== null && (
+              <SideInfo
+                activeMenu={activeMenu}
+                indicators={indicators}
+                setIndicators={setIndicators}
+              />
+            )}
           </div>
         )}
 

@@ -4,7 +4,7 @@ import {
   CurrentCoordinate,
   MouseCoordinateY,
 } from "react-stockcharts/lib/coordinates";
-import React, { useContext } from "react";
+import React, { Fragment, useContext, useState } from "react";
 import { XAxis, YAxis } from "react-stockcharts/lib/axes";
 import {
   bollingerBand,
@@ -26,7 +26,11 @@ const GREEN_CANDLE = "rgb(74 222 128)"; // bg-green-500
 const RED_CANDLE = "rgb(239 68 68)"; // bg-red-500
 const SUBTLE_BORDER = "rgb(30 41 59)"; // bg-slate-800
 
-function CandleStickV2({ datasets, activeMenu }) {
+// EMA VAR
+let ema20;
+let ema50;
+
+function CandleStickV2({ datasets, activeMenu, indicators = [] }) {
   // HOOKS
   const { size } = useContext(SizeContext);
   // CHART CONFIG
@@ -36,22 +40,31 @@ function CandleStickV2({ datasets, activeMenu }) {
   const gridHeight = height - margin.top - margin.bottom;
   const gridWidth = width - margin.left - margin.right;
 
-  // INDICATORS
-  const ema20 = ema()
-    .id(0)
-    .options({ windowSize: 20 })
-    .merge((d, c) => {
-      d.ema20 = c;
-    })
-    .accessor((d) => d.ema20);
+  // STATES
 
-  const ema50 = ema()
-    .id(2)
-    .options({ windowSize: 50 })
-    .merge((d, c) => {
-      d.ema50 = c;
-    })
-    .accessor((d) => d.ema50);
+  // FUNCS
+  const emaGenerator = (id, windowSize, variable) => {
+    return ema()
+      .id(id)
+      .options({ windowSize })
+      .merge((d, c) => {
+        d[variable] = c;
+      })
+      .accessor((d) => d[variable]);
+  };
+
+  const emaTooltipBuilder = (emaFunc) => ({
+    yAccessor: emaFunc.accessor(),
+    yLabel: `${emaFunc.type()}(${emaFunc.options().windowSize})`,
+    valueFill: emaFunc.stroke(),
+    withShape: true,
+  });
+
+  // INDICATORS
+
+  // EMA WATSONS
+  ema20 = emaGenerator(0, 20, "ema20");
+  ema50 = emaGenerator(2, 50, "ema50");
 
   const slowSTO = stochasticOscillator()
     .options({ windowSize: 14, kWindowSize: 3 })
@@ -177,35 +190,54 @@ function CandleStickV2({ datasets, activeMenu }) {
             />
 
             {/* BILA USER PILIH INDICATOR BARU WUJUD DEKAT SINI ---  */}
-            <LineSeries
-              yAccessor={ema20.accessor()}
-              stroke={ema20.stroke()}
-            />
+            {indicators.map((item, index) => {
+              if (item === "ema20") {
+                return (
+                  <Fragment key={index}>
+                    <LineSeries
+                      yAccessor={ema20.accessor()}
+                      stroke={ema20.stroke()}
+                    />
 
-            <CurrentCoordinate
-              yAccessor={ema20.accessor()}
-              fill={ema20.stroke()}
-            />
+                    <CurrentCoordinate
+                      yAccessor={ema20.accessor()}
+                      fill={ema20.stroke()}
+                    />
+                  </Fragment>
+                );
+              }
+
+              if (item === "ema50") {
+                return (
+                  <Fragment key={index}>
+                    <LineSeries
+                      yAccessor={ema50.accessor()}
+                      stroke={ema50.stroke()}
+                    />
+
+                    <CurrentCoordinate
+                      yAccessor={ema50.accessor()}
+                      fill={ema50.stroke()}
+                    />
+                  </Fragment>
+                );
+              }
+            })}
 
             <GroupTooltip
               layout="vertical"
               origin={[20, 30]}
               verticalSize={20}
               onClick={(e) => console.log(e)}
-              options={[
-                {
-                  yAccessor: ema20.accessor(),
-                  yLabel: `${ema20.type()}(${ema20.options().windowSize})`,
-                  valueFill: ema20.stroke(),
-                  withShape: true,
-                },
-                {
-                  yAccessor: ema50.accessor(),
-                  yLabel: `${ema50.type()}(${ema50.options().windowSize})`,
-                  valueFill: ema50.stroke(),
-                  withShape: true,
-                },
-              ]}
+              options={indicators.map((item) => {
+                if (item === "ema20") {
+                  return emaTooltipBuilder(ema20);
+                }
+
+                if (item === "ema50") {
+                  return emaTooltipBuilder(ema50);
+                }
+              })}
             />
           </Chart>
         </ChartCanvas>

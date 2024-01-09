@@ -3,7 +3,7 @@ import IndicatorList from "./Menu/IndicatorList";
 import React from "react";
 import { menuList } from "./MenuList";
 
-function SideInfo({ activeMenu }) {
+function SideInfo({ activeMenu, indicators, setIndicators }) {
   return (
     <div className="border-l border-b border-slate-800 h-full">
       <div className="border-b border-slate-800 p-3">
@@ -12,7 +12,12 @@ function SideInfo({ activeMenu }) {
         </p>
       </div>
       {activeMenu === 1 && <CurrentStock />}
-      {activeMenu === 2 && <IndicatorList />}
+      {activeMenu === 2 && (
+        <IndicatorList
+          indicators={indicators}
+          setIndicators={setIndicators}
+        />
+      )}
       {activeMenu === 3 && (
         <div className="flex items-center justify-center h-full">
           <p className="text-white font-bold text-center">
