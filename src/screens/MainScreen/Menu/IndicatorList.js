@@ -14,9 +14,11 @@ function IndicatorList({ indicators, setIndicators, setOpenEMAConfigModal }) {
       {listOfIndicatorsAvailable.map((item) => {
         if (indicators.includes(item.name)) {
           return (
-            <div className="h-10 flex flex-row gap-2 items-center  mb-2">
+            <div
+              key={item.id}
+              className="h-10 flex flex-row gap-2 items-center  mb-2"
+            >
               <button
-                key={item.id}
                 onClick={() => {
                   let result = [...indicators];
                   result = result.filter((i) => i !== item.name);

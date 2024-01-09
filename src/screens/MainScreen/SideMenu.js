@@ -4,8 +4,9 @@ import { menuList } from "./MenuList";
 function SideMenu({ activeMenu, setActiveMenu }) {
   return (
     <div className="border-b border-l border-slate-800 p-2 h-full flex flex-col gap-2">
-      {menuList.map((item, index) => (
+      {menuList.map((item) => (
         <button
+          key={item.id}
           onClick={() => {
             if (activeMenu === item.id) {
               return setActiveMenu(null);
@@ -13,7 +14,6 @@ function SideMenu({ activeMenu, setActiveMenu }) {
               return setActiveMenu(item.id);
             }
           }}
-          key={index}
           className={`hover:bg-slate-800 border-2 rounded-lg flex justify-center items-center ${
             activeMenu === item.id
               ? "bg-slate-800 border-green-500"
