@@ -7,6 +7,7 @@ import EmaConfigModal from "./EmaConfigModal";
 import { GET_STOCKS_BY_MARKET_REQUEST } from "../../redux/constant/stocks";
 import HeadInfo from "./HeadInfo";
 import IndicatorList from "./Menu/IndicatorList";
+import News from "./Menu/News";
 import SearchSymbolModal from "./SearchSymbolModal";
 import SideInfo from "./SideInfo";
 import SideMenu from "./SideMenu";
@@ -143,6 +144,7 @@ function MainScreen() {
                     setOpenEMAConfigModal={setOpenEMAConfigModal}
                   />
                 )}
+                {activeMenu === 3 && <News />}
               </SideInfo>
             )}
           </div>

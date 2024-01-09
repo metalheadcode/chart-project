@@ -1,10 +1,18 @@
-import { createContext, useLayoutEffect, useState } from "react";
+import { createContext, useEffect, useLayoutEffect, useState } from "react";
 
+import Alert from "./components/Alert";
+import Footer from "./screens/Footer";
+import Header from "./screens/Header";
 import MainScreen from "./screens/MainScreen";
+import { useSelector } from "react-redux";
 
 export const SizeContext = createContext();
 
 function App() {
+  const [errors, setErrors] = useState([]);
+  const stocks = useSelector((state) => state.stocks);
+  const news = useSelector((state) => state.news);
+
   const [size, setSize] = useState({
     width: 0,
     height: 0,
@@ -19,25 +27,37 @@ function App() {
     return () => window.removeEventListener("resize", updateSize);
   }, []);
 
+  useEffect(() => {
+    let errorsResult = [];
+    if (stocks.error !== null) {
+      errorsResult.push(stocks.error.message);
+    }
+    if (news.error !== null) {
+      errorsResult.push(news.error.message);
+    }
+
+    setErrors(errorsResult);
+  }, [stocks.error, news.error]);
+
   return (
     <SizeContext.Provider value={{ size }}>
       <div className="">
-        <div className="p-2 flex">
-          <div className="flex mr-2">
-            <div className="h-4 w-4 bg-slate-50 mr-2" />
-            <p className="text-slate-500 text-xs text-center font-light">
-              ChartProject
-            </p>
-          </div>
-        </div>
+        <Header />
         <MainScreen />
-        <div className="absolute bottom-0 left-0 right-0 bg-slate-900">
-          <p className="text-slate-500 text-xs py-1 text-center font-light">
-            Copyright Reserved MobileMind-Pro© 2024 . Visit www.mobilemind.pro
-            for more info
-          </p>
-        </div>
+        <Footer />
       </div>
+      {errors.length > 0 && (
+        <div className="absolute bottom-0 left-0 right-0 z-50 m-3">
+          {errors.map((err, ind) => (
+            <Alert
+              key={ind}
+              message={err}
+              type="ERROR"
+              onClose={() => setErrors([])}
+            />
+          ))}
+        </div>
+      )}
     </SizeContext.Provider>
   );
 }
