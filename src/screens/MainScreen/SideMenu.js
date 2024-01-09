@@ -14,8 +14,10 @@ function SideMenu({ activeMenu, setActiveMenu }) {
             }
           }}
           key={index}
-          className={`hover:bg-slate-800 border border-slate-800 rounded-lg flex justify-center items-center ${
-            activeMenu === item.id ? "bg-slate-950" : ""
+          className={`hover:bg-slate-800 border-2 rounded-lg flex justify-center items-center ${
+            activeMenu === item.id
+              ? "bg-slate-800 border-green-500"
+              : "border-slate-800"
           }`}
           style={{ height: 43 }}
         >

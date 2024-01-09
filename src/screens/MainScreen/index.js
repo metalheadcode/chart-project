@@ -2,8 +2,11 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import CandleStickV2 from "../../components/Charts/CandleStickV2";
+import CurrentStock from "./Menu/CurrentStock";
+import EmaConfigModal from "./EmaConfigModal";
 import { GET_STOCKS_BY_MARKET_REQUEST } from "../../redux/constant/stocks";
 import HeadInfo from "./HeadInfo";
+import IndicatorList from "./Menu/IndicatorList";
 import SearchSymbolModal from "./SearchSymbolModal";
 import SideInfo from "./SideInfo";
 import SideMenu from "./SideMenu";
@@ -18,6 +21,7 @@ function MainScreen() {
 
   // MODALS
   const [openMarketModal, setOpenMarketModal] = useState(false);
+  const [openEMAConfigModal, setOpenEMAConfigModal] = useState(false);
 
   // STATES
   const [chartData, setChartData] = useState([]);
@@ -88,6 +92,10 @@ function MainScreen() {
         numOfDay={numOfDay}
         symbolLog={symbolLog}
       />
+      <EmaConfigModal
+        open={openEMAConfigModal}
+        onClose={() => setOpenEMAConfigModal(false)}
+      />
 
       {/* --- HEADER ---  */}
       {symbol !== null && (
@@ -126,11 +134,16 @@ function MainScreen() {
             style={{ width: 270 }}
           >
             {symbol !== null && (
-              <SideInfo
-                activeMenu={activeMenu}
-                indicators={indicators}
-                setIndicators={setIndicators}
-              />
+              <SideInfo>
+                {activeMenu === 1 && <CurrentStock />}
+                {activeMenu === 2 && (
+                  <IndicatorList
+                    indicators={indicators}
+                    setIndicators={setIndicators}
+                    setOpenEMAConfigModal={setOpenEMAConfigModal}
+                  />
+                )}
+              </SideInfo>
             )}
           </div>
         )}

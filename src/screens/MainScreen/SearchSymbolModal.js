@@ -1,9 +1,10 @@
 import { format, subDays } from "date-fns";
 import { useDispatch, useSelector } from "react-redux";
 
+import CustomModal from "../../components/CustomModal";
 import { GET_HISTORY_PRICES_BY_SYMBOL_REQUEST } from "../../redux/constant/stocks";
+import Input from "../../components/Inputs/Input";
 import React from "react";
-import ReactModal from "react-modal";
 import { timeParse } from "d3-time-format";
 
 function SearchSymbolModal({
@@ -47,21 +48,13 @@ function SearchSymbolModal({
   };
 
   return (
-    <ReactModal
-      ariaHideApp={false}
-      isOpen={open}
-      onRequestClose={onClose}
-      style={{
-        overlay: {
-          background: "rgba(0,0,0,0.7)",
-        },
-      }}
-      className="z-50 w-1/3 rounded-2xl absolute top-1/4 left-1/3 right-1/3 bottom-auto"
+    <CustomModal
+      open={open}
+      onClose={onClose}
     >
       <div className=" p-3 shadow-lg rounded-2xl border border-slate-800 bg-slate-900 flex flex-col gap-2 h-96">
-        <input
+        <Input
           placeholder="Search Symbol"
-          className="border border-slate-800 bg-slate-900 p-2 rounded-lg text-slate-100"
           onChange={(event) => {
             const value = event.target.value;
             const capital = value.toUpperCase();
@@ -117,7 +110,7 @@ function SearchSymbolModal({
           ))}
         </div>
       </div>
-    </ReactModal>
+    </CustomModal>
   );
 }
 

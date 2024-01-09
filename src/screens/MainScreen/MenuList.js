@@ -1,17 +1,20 @@
-import { CgSignal } from "react-icons/cg";
+import { CgInfo, CgScreen } from "react-icons/cg";
+
+import { IoNewspaper } from "react-icons/io5";
+import { RiAlertFill } from "react-icons/ri";
 
 export const menuList = [
   {
     id: 1,
     title: "Current Info",
     icon: (
-      <CgSignal
+      <CgInfo
         color="white"
         size={23}
       />
     ),
     iconActive: (
-      <CgSignal
+      <CgInfo
         className="text-green-500"
         size={23}
       />
@@ -21,13 +24,13 @@ export const menuList = [
     id: 2,
     title: "Indicator List",
     icon: (
-      <CgSignal
+      <CgScreen
         color="white"
         size={23}
       />
     ),
     iconActive: (
-      <CgSignal
+      <CgScreen
         className="text-green-500"
         size={23}
       />
@@ -35,49 +38,33 @@ export const menuList = [
   },
   {
     id: 3,
-    title: "Current Info",
+    title: "News",
     icon: (
-      <CgSignal
+      <IoNewspaper
         color="white"
-        size={23}
+        size={21}
       />
     ),
     iconActive: (
-      <CgSignal
+      <IoNewspaper
         className="text-green-500"
-        size={23}
+        size={21}
       />
     ),
   },
   {
     id: 4,
-    title: "Current Info",
+    title: "Alert",
     icon: (
-      <CgSignal
+      <RiAlertFill
         color="white"
-        size={23}
+        size={21}
       />
     ),
     iconActive: (
-      <CgSignal
+      <RiAlertFill
         className="text-green-500"
-        size={23}
-      />
-    ),
-  },
-  {
-    id: 5,
-    title: "Current Info",
-    icon: (
-      <CgSignal
-        color="white"
-        size={23}
-      />
-    ),
-    iconActive: (
-      <CgSignal
-        className="text-green-500"
-        size={23}
+        size={21}
       />
     ),
   },
