@@ -1,4 +1,10 @@
-# Getting Started with Create React App
+# Understand Stock Charting
+
+## Introduction
+
+This project is designed to facilitate learning the utilization of react-stockcharting, with a dual focus on comprehending the management of substantial datasets from stock timeseries and gaining proficiency in [D3.js](https://d3js.org) simultaneously.
+
+## Techical
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
