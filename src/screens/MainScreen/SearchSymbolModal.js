@@ -67,6 +67,7 @@ function SearchSymbolModal({
               setChartData(finalData);
             }
           }}
+          helperText="Search by stock name, such as AAPL for Apple or GOOGL for Google"
         />
 
         <div className="overflow-scroll no-scrollbar overflow-y-auto flex flex-col gap-2">
