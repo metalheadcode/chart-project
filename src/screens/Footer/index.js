@@ -6,7 +6,8 @@ function Footer() {
       <p className="text-slate-500 text-xs py-1 text-center font-light">
         This project is currently in progress, and it is advisable to anticipate
         potential errors. We appreciate your understanding and cooperation.
-        Thank you
+        Thank you. For more info visit{" "}
+        <a href="https://ahmadhazim.com">https://ahmadhazim.com</a>
       </p>
     </div>
   );

@@ -12,7 +12,7 @@ function IndicatorList({ indicators, setIndicators, setOpenEMAConfigModal }) {
   return (
     <div className="p-2">
       {listOfIndicatorsAvailable.map((item) => {
-        if (indicators.includes(item.name)) {
+        if (indicators.includes(item.code)) {
           return (
             <div
               key={item.id}
@@ -21,7 +21,7 @@ function IndicatorList({ indicators, setIndicators, setOpenEMAConfigModal }) {
               <button
                 onClick={() => {
                   let result = [...indicators];
-                  result = result.filter((i) => i !== item.name);
+                  result = result.filter((i) => i !== item.code);
                   return setIndicators(result);
                 }}
                 className="rounded-lg h-full w-10/12 bg-slate-600 flex justify-center items-center"
@@ -31,7 +31,10 @@ function IndicatorList({ indicators, setIndicators, setOpenEMAConfigModal }) {
               <button
                 className="rounded-lg h-full w-2/12 bg-green-500 flex justify-center items-center"
                 onClick={() => {
-                  setOpenEMAConfigModal((prev) => !prev);
+                  setOpenEMAConfigModal({
+                    indicatorTitle: item.name.toUpperCase(),
+                    isOpen: true,
+                  });
                 }}
               >
                 <RiSettings5Fill color="white" />
@@ -40,14 +43,14 @@ function IndicatorList({ indicators, setIndicators, setOpenEMAConfigModal }) {
           );
         }
 
-        if (!indicators.includes(item.name)) {
+        if (!indicators.includes(item.code)) {
           return (
             <button
               key={item.id}
               className="h-10 mb-2 rounded-lg px-3 py-2 w-full bg-slate-800"
               onClick={() => {
                 let result = [...indicators];
-                result.push(item.name);
+                result.push(item.code);
                 return setIndicators(result);
               }}
             >

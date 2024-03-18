@@ -1,4 +1,5 @@
 export const listOfIndicatorsAvailable = [
-  { id: 1, name: "ema20" },
-  { id: 2, name: "ema50" },
+  { id: 1, code: "ema20", name: "EMA 20" },
+  { id: 2, code: "ema50", name: "EMA 50" },
+  { id: 3, code: "bb", name: "Bollinger Band" },
 ];

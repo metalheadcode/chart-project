@@ -22,7 +22,10 @@ function MainScreen() {
 
   // MODALS
   const [openMarketModal, setOpenMarketModal] = useState(false);
-  const [openEMAConfigModal, setOpenEMAConfigModal] = useState(false);
+  const [openEMAConfigModal, setOpenEMAConfigModal] = useState({
+    indicatorTitle: "",
+    isOpen: false,
+  });
 
   // STATES
   const [chartData, setChartData] = useState([]);
@@ -52,7 +55,7 @@ function MainScreen() {
   });
 
   // CHART STATE
-  const [indicators, setIndicators] = useState(["ema20", "ema50"]);
+  const [indicators, setIndicators] = useState(["ema20", "ema50", "bb"]);
   const [activeMenu, setActiveMenu] = useState(null);
   const [d3Datasets, setD3Datasets] = useState(null);
   const [numOfDay, setNumOfDay] = useState(30);
@@ -94,8 +97,14 @@ function MainScreen() {
         symbolLog={symbolLog}
       />
       <EmaConfigModal
-        open={openEMAConfigModal}
-        onClose={() => setOpenEMAConfigModal(false)}
+        open={openEMAConfigModal.isOpen}
+        onClose={() =>
+          setOpenEMAConfigModal({
+            indicatorTitle: "",
+            isOpen: false,
+          })
+        }
+        title={openEMAConfigModal.indicatorTitle}
       />
 
       {/* --- HEADER ---  */}

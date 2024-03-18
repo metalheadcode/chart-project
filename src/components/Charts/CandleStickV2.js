@@ -1,23 +1,34 @@
-import { CandlestickSeries, LineSeries } from "react-stockcharts/lib/series";
+import {
+  AreaSeries,
+  BarSeries,
+  BollingerSeries,
+  CandlestickSeries,
+  LineSeries,
+  MACDSeries,
+} from "react-stockcharts/lib/series";
 import { Chart, ChartCanvas } from "react-stockcharts";
 import {
   CurrentCoordinate,
+  MouseCoordinateX,
   MouseCoordinateY,
 } from "react-stockcharts/lib/coordinates";
-import React, { Fragment, useContext, useState } from "react";
+import { GroupTooltip, MACDTooltip } from "react-stockcharts/lib/tooltip";
+import React, { Fragment, useContext, useEffect, useState } from "react";
 import { XAxis, YAxis } from "react-stockcharts/lib/axes";
 import {
   bollingerBand,
   ema,
+  macd,
+  sma,
   stochasticOscillator,
 } from "react-stockcharts/lib/indicator";
 import { last, timeIntervalBarWidth } from "react-stockcharts/lib/utils";
 
-import { GroupTooltip } from "react-stockcharts/lib/tooltip";
 import { SizeContext } from "../../App";
 import { discontinuousTimeScaleProvider } from "react-stockcharts/lib/scale";
 import { format } from "d3-format";
 import { scaleTime } from "d3-scale";
+import { timeFormat } from "d3-time-format";
 import { useSelector } from "react-redux";
 import { utcDay } from "d3-time";
 
@@ -29,6 +40,40 @@ const SUBTLE_BORDER = "rgb(30 41 59)"; // bg-slate-800
 // EMA VAR
 let ema20;
 let ema50;
+let bb;
+
+// --- BB CONFIG START HERE ---
+
+const bbStroke = {
+  top: "#964B00",
+  middle: "#000000",
+  bottom: "#964B00",
+};
+
+const bbFill = "#4682B4";
+
+// --- MACD CONFIG START HERE ---
+
+const macdAppearance = {
+  stroke: {
+    macd: "#FF0000",
+    signal: "#00F300",
+  },
+  fill: {
+    divergence: "#4682B4",
+  },
+};
+
+const mouseEdgeAppearance = {
+  textFill: "#542605",
+  stroke: "#05233B",
+  strokeOpacity: 1,
+  strokeWidth: 3,
+  arrowWidth: 5,
+  fill: "#BCDEFA",
+};
+
+// --- MACD CONFIG END HERE ---
 
 function CandleStickV2({ datasets, activeMenu, indicators = [] }) {
   // HOOKS
@@ -40,7 +85,47 @@ function CandleStickV2({ datasets, activeMenu, indicators = [] }) {
   const gridHeight = height - margin.top - margin.bottom;
   const gridWidth = width - margin.left - margin.right;
 
-  // STATES
+  // TOOLTIP STATE
+  const [tooltip, setTooltip] = useState([]);
+
+  // EFFECTS
+  useEffect(() => {
+    if (indicators.length > 0) {
+      let arr = [];
+      for (let index = 0; index < indicators.length; index++) {
+        const value = indicators[index];
+
+        if (value === "ema20") {
+          arr.push({
+            yAccessor: ema20.accessor(),
+            yLabel: `EMA 20`,
+            valueFill: ema20.stroke(),
+            withShape: true,
+          });
+        }
+
+        if (value === "ema50") {
+          arr.push({
+            yAccessor: ema50.accessor(),
+            yLabel: `EMA 50`,
+            valueFill: ema50.stroke(),
+            withShape: true,
+          });
+        }
+
+        if (value === "bb") {
+          arr.push({
+            yAccessor: bb.accessor(),
+            yLabel: `Bolinger Band`,
+            valueFill: "#FFFFFF",
+            withShape: true,
+          });
+        }
+      }
+
+      return setTooltip(arr);
+    }
+  }, [indicators]);
 
   // FUNCS
   const emaGenerator = (id, windowSize, variable) => {
@@ -55,7 +140,7 @@ function CandleStickV2({ datasets, activeMenu, indicators = [] }) {
 
   const emaTooltipBuilder = (emaFunc) => ({
     yAccessor: emaFunc.accessor(),
-    yLabel: `${emaFunc.type()}(${emaFunc.options().windowSize})`,
+    yLabel: `${emaFunc}`,
     valueFill: emaFunc.stroke(),
     withShape: true,
   });
@@ -65,6 +150,30 @@ function CandleStickV2({ datasets, activeMenu, indicators = [] }) {
   // EMA WATSONS
   ema20 = emaGenerator(0, 20, "ema20");
   ema50 = emaGenerator(2, 50, "ema50");
+
+  // --- MACD START HERE ---
+
+  const macdCalculator = macd()
+    .options({
+      fast: 12,
+      slow: 26,
+      signal: 9,
+    })
+    .merge((d, c) => {
+      d.macd = c;
+    })
+    .accessor((d) => d.macd);
+
+  const smaVolume50 = sma()
+    .options({ windowSize: 20, sourcePath: "volume" })
+    .merge((d, c) => {
+      d.smaVolume50 = c;
+    })
+    .accessor((d) => d.smaVolume50)
+    .stroke("#4682B4")
+    .fill("#4682B4");
+
+  // --- MACD END HERE ---
 
   const slowSTO = stochasticOscillator()
     .options({ windowSize: 14, kWindowSize: 3 })
@@ -87,7 +196,7 @@ function CandleStickV2({ datasets, activeMenu, indicators = [] }) {
     })
     .accessor((d) => d.fullSTO);
 
-  const bb = bollingerBand()
+  bb = bollingerBand()
     .merge((d, c) => {
       d.bb = c;
     })
@@ -154,6 +263,8 @@ function CandleStickV2({ datasets, activeMenu, indicators = [] }) {
           <Chart
             id={1}
             yExtents={[(d) => [d.high, d.low], ema20.accessor()]}
+            padding={{ top: 10, bottom: 300 }}
+            // origin={(w, h) => [0, h - 300]}
           >
             <XAxis
               axisAt="bottom"
@@ -188,6 +299,15 @@ function CandleStickV2({ datasets, activeMenu, indicators = [] }) {
               stroke={(d) => (d.close > d.open ? GREEN_CANDLE : RED_CANDLE)}
               wickStroke={(d) => (d.close > d.open ? GREEN_CANDLE : RED_CANDLE)}
             />
+
+            {/* --- BOLINGER START HERE ---  */}
+            {indicators.includes("bb") && (
+              <BollingerSeries
+                yAccessor={(d) => d.bb}
+                stroke={bbStroke}
+                fill={bbFill}
+              />
+            )}
 
             {/* BILA USER PILIH INDICATOR BARU WUJUD DEKAT SINI ---  */}
             {indicators.map((item, index) => {
@@ -229,17 +349,42 @@ function CandleStickV2({ datasets, activeMenu, indicators = [] }) {
               origin={[20, 30]}
               verticalSize={20}
               onClick={(e) => console.log(e)}
-              options={indicators.map((item) => {
-                if (item === "ema20") {
-                  return emaTooltipBuilder(ema20);
-                }
-
-                if (item === "ema50") {
-                  return emaTooltipBuilder(ema50);
-                }
-              })}
+              options={tooltip}
             />
           </Chart>
+
+          {/* --- SMA CHART START HERE ---  */}
+          <Chart
+            id={2}
+            height={150}
+            yExtents={[(d) => d.volume, smaVolume50.accessor()]}
+            origin={(w, h) => [0, h - 150]}
+          >
+            {/* <YAxis
+              axisAt="left"
+              orient="left"
+              ticks={5}
+              tickFormat={format(".2s")}
+            /> */}
+
+            <MouseCoordinateY
+              at="left"
+              orient="left"
+              displayFormat={format(".4s")}
+              {...mouseEdgeAppearance}
+            />
+
+            <BarSeries
+              yAccessor={(d) => d.volume}
+              fill={(d) => (d.close > d.open ? "#6BA583" : "#FF0000")}
+            />
+            <AreaSeries
+              yAccessor={smaVolume50.accessor()}
+              stroke={smaVolume50.stroke()}
+              fill={smaVolume50.fill()}
+            />
+          </Chart>
+          {/* --- SMA CHART END HERE ---  */}
         </ChartCanvas>
       </div>
     );

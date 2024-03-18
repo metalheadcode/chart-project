@@ -24,14 +24,17 @@ function HeadInfo({ symbol, setOpenMarketModal }) {
           id=""
           className="flex items-center gap-2"
         >
-          <button
+          {/* <button
             onClick={() => {
               setOpenMarketModal(true);
             }}
             className="hover:bg-slate-700 hover:shadow-md bg-slate-800 text-lg font-bold border-2 border-green-500 px-7 py-2 rounded-lg"
           >
             <p className="text-green-500">{marketStr}</p>
-          </button>
+          </button> */}
+          <div className="hover:bg-slate-700 hover:shadow-md bg-slate-800 text-lg font-bold border-2 border-green-500 px-7 py-2 rounded-lg">
+            <p className="text-green-500">{marketStr}</p>
+          </div>
           <CgArrowRight
             className="text-slate-700"
             size={20}
