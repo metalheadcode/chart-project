@@ -1,10 +1,10 @@
 # Understand Stock Charting
 
-## Introduction
+### Introduction
 
 This project is designed to facilitate learning the utilization of react-stockcharting, with a dual focus on comprehending the management of substantial datasets from stock timeseries and gaining proficiency in [D3.js](https://d3js.org) simultaneously. Demo [here](https://chart-project-cyan.vercel.app).
 
-## Techical
+### How to run this project?
 
 Step to run this project:
 
@@ -28,7 +28,7 @@ Step to run this project:
 
         ![Alt Text](./public/readme_images/dashboard.png)
 
-## How To Use ?
+### How To Use ?
 
 1. Type a NASDAQ Symbol
 
