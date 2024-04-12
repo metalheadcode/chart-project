@@ -6,71 +6,23 @@ This project is designed to facilitate learning the utilization of react-stockch
 
 ## Techical
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Step to run this project:
 
-## Available Scripts
+1. Install all packages. ```npm install --legacy-peer-deps```
+![Alt Text](./public/readme_images/create_env.png)
+2. Create new .env file and add ```REACT_APP_API_URL=https://financialmodelingprep.com/api/v3``` and ```REACT_APP_API_KEY``` for this API Key you can register at [FMP](https://site.financialmodelingprep.com/). Here is the detail steps you can follow:
+    a. Click register
+        ![Alt Text](./public/readme_images/register.png)
+    b. After register they will bring back to homepage and click dashboard
+        ![Alt Text](./public/readme_images/click_dashboard.png)
+    c. You will get your own API Keys, copy them and paste at .env file and name them as REACT_APP_API_KEY
+        ![Alt Text](./public/readme_images/dashboard.png)
 
-In the project directory, you can run:
+## How To Use ?
 
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+1. Type a NASDAQ Symbol
+![Alt Text](./public/readme_images/type_symbol.png)
+2. Wait until chart fully displayed
+![Alt Text](./public/readme_images/finally.png)
+3. You can on off the indicator here
+![Alt Text](./public/readme_images/close_indicator.png)
