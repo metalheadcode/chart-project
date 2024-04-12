@@ -6,38 +6,38 @@ This project is designed to facilitate learning the utilization of react-stockch
 
 ### How to run this project?
 
-Step to run this project:
+Steps to run this project:
 
-1. Install all packages. ```npm install --legacy-peer-deps```
+1. Install all packages: `npm install --legacy-peer-deps`
 
-2. Create new .env file
+2. Create a new .env file:
 
-    ![Alt Text](./public/readme_images/create_env.png)
+    ![Create .env File](./public/readme_images/create_env.png)
 
-3. Add **REACT_APP_API_URL** and **REACT_APP_API_KEY** ```REACT_APP_API_URL=https://financialmodelingprep.com/api/v3``` and **REACT_APP_API_KEY** for this API Key you can register at [FMP](https://site.financialmodelingprep.com/). Here is the detail steps you can follow:
+3. Add **REACT_APP_API_URL** and **REACT_APP_API_KEY**. For the API Key, you can register at [FMP](https://site.financialmodelingprep.com/). Here are the detailed steps you can follow:
 
-    * Click register
+    * Click register:
 
-        ![Alt Text](./public/readme_images/register.png)
+        ![Register](./public/readme_images/register.png)
 
-    * After register they will bring back to homepage and click dashboard
+    * After registering, you will be redirected to the homepage. Click on the dashboard:
 
-        ![Alt Text](./public/readme_images/click_dashboard.png)
+        ![Dashboard](./public/readme_images/click_dashboard.png)
 
-    * You will get your own API Keys, copy them and paste at .env file and name them as REACT_APP_API_KEY
+    * You will get your own API Keys. Copy them and paste them in the .env file, naming them as REACT_APP_API_KEY:
 
-        ![Alt Text](./public/readme_images/dashboard.png)
+        ![Dashboard](./public/readme_images/dashboard.png)
 
-### How To Use ?
+### How To Use?
 
-1. Type a NASDAQ Symbol
+1. Type a NASDAQ Symbol:
 
-    ![Alt Text](./public/readme_images/type_symbol.png)
+    ![Type a NASDAQ Symbol](./public/readme_images/type_symbol.png)
 
-2. Wait until chart fully displayed
+2. Wait until the chart is fully displayed:
 
-    ![Alt Text](./public/readme_images/finally.png)
+    ![Chart Displayed](./public/readme_images/finally.png)
 
-3. You can on off the indicator here
+3. You can toggle the indicator on or off here:
 
-    ![Alt Text](./public/readme_images/close_indicator.png)
+    ![Toggle Indicator](./public/readme_images/close_indicator.png)
