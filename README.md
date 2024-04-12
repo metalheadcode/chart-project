@@ -9,13 +9,14 @@ This project is designed to facilitate learning the utilization of react-stockch
 Step to run this project:
 
 1. Install all packages. ```npm install --legacy-peer-deps```
+2. Create new .env file
 ![Alt Text](./public/readme_images/create_env.png)
-2. Create new .env file and add ```REACT_APP_API_URL=https://financialmodelingprep.com/api/v3``` and ```REACT_APP_API_KEY``` for this API Key you can register at [FMP](https://site.financialmodelingprep.com/). Here is the detail steps you can follow:
-    a. Click register
+3. Add **REACT_APP_API_URL** and **REACT_APP_API_KEY** ```REACT_APP_API_URL=https://financialmodelingprep.com/api/v3``` and **REACT_APP_API_KEY** for this API Key you can register at [FMP](https://site.financialmodelingprep.com/). Here is the detail steps you can follow:
+    * Click register
         ![Alt Text](./public/readme_images/register.png)
-    b. After register they will bring back to homepage and click dashboard
+    * After register they will bring back to homepage and click dashboard
         ![Alt Text](./public/readme_images/click_dashboard.png)
-    c. You will get your own API Keys, copy them and paste at .env file and name them as REACT_APP_API_KEY
+    * You will get your own API Keys, copy them and paste at .env file and name them as REACT_APP_API_KEY
         ![Alt Text](./public/readme_images/dashboard.png)
 
 ## How To Use ?
