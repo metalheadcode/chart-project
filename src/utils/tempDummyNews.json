@@ -1,0 +1,20 @@
+{
+  "data": [
+    {
+      "title": "Sample News 1",
+      "date": "2024-03-20",
+      "symbol": "AAPL",
+      "content": "Sample content 1",
+      "url": "https://example.com/1",
+      "source": "Sample Source"
+    },
+    {
+      "title": "Sample News 2",
+      "date": "2024-03-19",
+      "symbol": "AAPL",
+      "content": "Sample content 2",
+      "url": "https://example.com/2",
+      "source": "Sample Source"
+    }
+  ]
+}
