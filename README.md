@@ -2,7 +2,7 @@
 
 ## Introduction
 
-A modern React application for visualizing stock market data with interactive charts. This project combines the power of React, D3.js, and Chart.js to create a comprehensive stock charting solution. It features real-time data visualization, technical indicators, and a responsive design built with Tailwind CSS.
+A modern React application for visualizing stock market data with interactive charts. This project combines the power of React, TypeScript, D3.js, and Chart.js to create a comprehensive stock charting solution. It features real-time data visualization, technical indicators, and a responsive design built with Tailwind CSS.
 
 Demo: [Live Demo](https://chart-project-cyan.vercel.app)
 
@@ -12,13 +12,15 @@ Demo: [Live Demo](https://chart-project-cyan.vercel.app)
 - Real-time data updates
 - Multiple technical indicators
 - Responsive design with Tailwind CSS
-- Redux state management
+- Redux state management with TypeScript support
 - Redux Saga for side effects
 - Modern React hooks implementation
+- Type-safe development with TypeScript
 
 ## Tech Stack
 
 - React 18
+- TypeScript
 - Redux & Redux Saga
 - D3.js & Chart.js
 - Tailwind CSS
@@ -72,6 +74,16 @@ npm start
 
 2. Open [http://localhost:3000](http://localhost:3000) in your browser
 
+## TypeScript Features
+
+The application is built with TypeScript, providing:
+
+- Type-safe state management with Redux
+- Proper type definitions for all components
+- Type-safe API calls and data handling
+- Enhanced developer experience with better IDE support
+- Reduced runtime errors through compile-time type checking
+
 ## Usage
 
 1. Enter a NASDAQ stock symbol in the search bar
@@ -82,9 +94,27 @@ npm start
    - Pan across different time periods
    - Adjust the time frame
 
+## Project Structure
+
+```
+src/
+├── components/     # Reusable UI components
+├── screens/        # Main application screens
+├── redux/          # Redux store and reducers
+├── types/          # TypeScript type definitions
+├── utils/          # Utility functions
+└── services/       # API services and data fetching
+```
+
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Contributions are welcome! Please feel free to submit a Pull Request. When contributing:
+
+1. Ensure all new code is written in TypeScript
+2. Add appropriate type definitions
+3. Follow the existing code style
+4. Add tests for new features
+5. Update documentation as needed
 
 ## License
 
